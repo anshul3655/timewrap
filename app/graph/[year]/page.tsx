@@ -2,7 +2,20 @@
 
 import { useState, useEffect, useCallback, useRef, type ChangeEvent } from "react"
 import { useParams, useRouter } from "next/navigation"
-import { Download, Save, Copy, MessageSquare, Check, Info, Calendar, Edit, X, FileUp, Database } from "lucide-react"
+import {
+  Download,
+  Save,
+  Copy,
+  MessageSquare,
+  Check,
+  Info,
+  Calendar,
+  Edit,
+  X,
+  FileUp,
+  Database,
+  Eye,
+} from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
@@ -428,7 +441,10 @@ export default function GraphPage() {
                       active:opacity-70 touch-action-manipulation
                       hover:opacity-80
                     `}
-                    onClick={() => setCurrentDay(dayNumber)}
+                    onClick={() => {
+                      setCurrentDay(dayNumber);
+                      toggleContribution(dayNumber);
+                    }}
                     onDoubleClick={() => {
                       if (hasContribution) {
                         setCurrentDay(dayNumber)
@@ -688,8 +704,7 @@ export default function GraphPage() {
                 <TooltipContent>
                   <p>Help &amp; Instructions</p>
                 </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+              </TooltipProvider>
           </div>
         </div>
 
@@ -729,132 +744,141 @@ export default function GraphPage() {
         )}
 
         {/* Bottom control panel */}
-        <div
-          className={`fixed bottom-0 left-0 right-0 z-20 glass-panel transition-transform duration-300 ${isMobile && !showControls ? "translate-y-full" : "translate-y-0"}`}
-        >
+        <div className="fixed bottom-0 left-0 right-0 z-20 glass-panel">
           <div className="container mx-auto px-4 py-3">
             <div className="flex flex-col sm:flex-row sm:flex-wrap sm:justify-center gap-2 sm:gap-4">
-              {/* First row on mobile - Save and Import */}
-              <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-row">
-                <Button variant="outline" size="sm" onClick={saveContributions} className="w-full sm:min-w-[80px]">
-                  <Save className="h-4 w-4 mr-2" />
-                  <span>Save</span>
+              {isMobile && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={toggleControls}
+                  className="h-10 w-10 p-0 flex-shrink-0 absolute left-4 bottom-3"
+                >
+                  {showControls ? <X className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </Button>
+              )}
 
-                <Button variant="outline" size="sm" onClick={triggerFileUpload} className="w-full sm:min-w-[80px]">
-                  <FileUp className="h-4 w-4 mr-2" />
-                  <span>Import</span>
-                </Button>
-              </div>
-
-              <input type="file" ref={fileInputRef} accept=".json" onChange={handleFileUpload} className="hidden" />
-
-              {/* Second row on mobile - Load and Export */}
-              <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-row">
-                <Button variant="outline" size="sm" onClick={loadContributions} className="w-full sm:min-w-[80px]">
-                  <Database className="h-4 w-4 mr-2" />
-                  <span>Load</span>
-                </Button>
-
-                <Button variant="outline" size="sm" onClick={exportContributions} className="w-full sm:min-w-[80px]">
-                  <Download className="h-4 w-4 mr-2" />
-                  <span>Export</span>
-                </Button>
-              </div>
-
-              {/* Third row on mobile - X button and Commits */}
-              <div className="w-full flex gap-2 sm:w-auto">
-                {isMobile && (
-                  <Button variant="outline" size="sm" onClick={toggleControls} className="h-10 w-10 p-0 flex-shrink-0">
-                    <X className="h-5 w-5" />
+              {/* Controls that can be hidden */}
+              <div
+                className={`flex flex-col sm:flex-row w-full gap-2 transition-opacity duration-300 ${isMobile && !showControls ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+              >
+                {/* First row on mobile - Save and Import */}
+                <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-row">
+                  <Button variant="outline" size="sm" onClick={saveContributions} className="w-full sm:min-w-[80px]">
+                    <Save className="h-4 w-4 mr-2" />
+                    <span>Save</span>
                   </Button>
-                )}
-                <Drawer>
-                  <DrawerTrigger asChild>
-                    <Button variant="outline" className="w-full sm:min-w-[80px]">
-                      <MessageSquare className="h-4 w-4 mr-2" />
-                      <span>Commits ({contributionCount})</span>
-                    </Button>
-                  </DrawerTrigger>
 
-                  <DrawerContent className="rounded-none">
-                    <div className="mx-auto w-full max-w-4xl">
-                      <DrawerHeader>
-                        <DrawerTitle>Git Commit Messages</DrawerTitle>
-                        <DrawerDescription>
-                          Copy these commands to recreate your contribution graph on GitHub
-                        </DrawerDescription>
-                      </DrawerHeader>
+                  <Button variant="outline" size="sm" onClick={triggerFileUpload} className="w-full sm:min-w-[80px]">
+                    <FileUp className="h-4 w-4 mr-2" />
+                    <span>Import</span>
+                  </Button>
+                </div>
 
-                      <div className="p-4 space-y-4 max-h-[60vh] overflow-y-auto">
-                        <Button
-                          onClick={copyAllCommits}
-                          className="w-full rounded-none"
-                          disabled={contributionCount === 0}
-                        >
-                          {allCopied ? <Check className="h-4 w-4 mr-2" /> : <Copy className="h-4 w-4 mr-2" />}
-                          Copy All Commands ({contributionCount})
-                        </Button>
+                <input type="file" ref={fileInputRef} accept=".json" onChange={handleFileUpload} className="hidden" />
 
-                        <div className="space-y-4">
-                          {contributions.map((contribution, index) => {
-                            if (!contribution?.hasContribution || !contribution?.commit) return null
+                {/* Second row on mobile - Load and Export */}
+                <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-row">
+                  <Button variant="outline" size="sm" onClick={loadContributions} className="w-full sm:min-w-[80px]">
+                    <Database className="h-4 w-4 mr-2" />
+                    <span>Load</span>
+                  </Button>
 
-                            const { month, day } = getMonthAndDay(index)
-                            const dateStr = `${MONTHS[month]} ${day}, ${year}`
-                            const isDefaultMessage = contribution.commit.message === DEFAULT_COMMIT_MESSAGE
+                  <Button variant="outline" size="sm" onClick={exportContributions} className="w-full sm:min-w-[80px]">
+                    <Download className="h-4 w-4 mr-2" />
+                    <span>Export</span>
+                  </Button>
+                </div>
 
-                            return (
-                              <div
-                                key={`commit-${index}`}
-                                className={`p-3 border rounded-none ${isDefaultMessage ? "" : "border-gray-400 dark:border-gray-500"}`}
-                              >
-                                <div className="flex justify-between items-start mb-2">
-                                  <div className="font-medium">{dateStr}</div>
-                                  <Button
-                                    size="sm"
-                                    variant="ghost"
-                                    onClick={() => copyCommit(index)}
-                                    className="h-6 px-2 rounded-none"
-                                  >
-                                    {copiedIndex === index ? (
-                                      <Check className="h-3 w-3" />
-                                    ) : (
-                                      <Copy className="h-3 w-3" />
-                                    )}
-                                  </Button>
-                                </div>
-                                <div className="text-sm text-gray-700 dark:text-gray-300 mb-2">
-                                  {contribution.commit.message}
-                                  {isDefaultMessage && <span className="text-xs text-gray-400 ml-2">(default)</span>}
-                                </div>
-                                <div className="text-xs bg-gray-100 dark:bg-gray-700 p-2 rounded-none font-mono overflow-x-auto">
-                                  GIT_AUTHOR_DATE="{contribution.commit.date}" GIT_COMMITTER_DATE="
-                                  {contribution.commit.date}" git commit --allow-empty -m "{contribution.commit.message}
-                                  "
-                                </div>
-                              </div>
-                            )
-                          })}
+                {/* Commits button */}
+                <div className="w-full sm:w-auto">
+                  <Drawer>
+                    <DrawerTrigger asChild>
+                      <Button variant="outline" className="w-full sm:min-w-[80px]">
+                        <MessageSquare className="h-4 w-4 mr-2" />
+                        <span>Commits ({contributionCount})</span>
+                      </Button>
+                    </DrawerTrigger>
 
-                          {contributionCount === 0 && (
-                            <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                              No contributions added yet. Use spacebar to toggle contributions on the graph.
-                            </div>
-                          )}
-                        </div>
-                      </div>
+                    <DrawerContent className="rounded-none">
+                      <div className="mx-auto w-full max-w-4xl">
+                        <DrawerHeader>
+                          <DrawerTitle>Git Commit Messages</DrawerTitle>
+                          <DrawerDescription>
+                            Copy these commands to recreate your contribution graph on GitHub
+                          </DrawerDescription>
+                        </DrawerHeader>
 
-                      <DrawerFooter>
-                        <DrawerClose asChild>
-                          <Button variant="outline" className="rounded-none">
-                            Close
+                        <div className="p-4 space-y-4 max-h-[60vh] overflow-y-auto">
+                          <Button
+                            onClick={copyAllCommits}
+                            className="w-full rounded-none"
+                            disabled={contributionCount === 0}
+                          >
+                            {allCopied ? <Check className="h-4 w-4 mr-2" /> : <Copy className="h-4 w-4 mr-2" />}
+                            Copy All Commands ({contributionCount})
                           </Button>
-                        </DrawerClose>
-                      </DrawerFooter>
-                    </div>
-                  </DrawerContent>
-                </Drawer>
+
+                          <div className="space-y-4">
+                            {contributions.map((contribution, index) => {
+                              if (!contribution?.hasContribution || !contribution?.commit) return null
+
+                              const { month, day } = getMonthAndDay(index)
+                              const dateStr = `${MONTHS[month]} ${day}, ${year}`
+                              const isDefaultMessage = contribution.commit.message === DEFAULT_COMMIT_MESSAGE
+
+                              return (
+                                <div
+                                  key={`commit-${index}`}
+                                  className={`p-3 border rounded-none ${isDefaultMessage ? "" : "border-gray-400 dark:border-gray-500"}`}
+                                >
+                                  <div className="flex justify-between items-start mb-2">
+                                    <div className="font-medium">{dateStr}</div>
+                                    <Button
+                                      size="sm"
+                                      variant="ghost"
+                                      onClick={() => copyCommit(index)}
+                                      className="h-6 px-2 rounded-none"
+                                    >
+                                      {copiedIndex === index ? (
+                                        <Check className="h-3 w-3" />
+                                      ) : (
+                                        <Copy className="h-3 w-3" />
+                                      )}
+                                    </Button>
+                                  </div>
+                                  <div className="text-sm text-gray-700 dark:text-gray-300 mb-2">
+                                    {contribution.commit.message}
+                                    {isDefaultMessage && <span className="text-xs text-gray-400 ml-2">(default)</span>}
+                                  </div>
+                                  <div className="text-xs bg-gray-100 dark:bg-gray-700 p-2 rounded-none font-mono overflow-x-auto">
+                                    GIT_AUTHOR_DATE="{contribution.commit.date}" GIT_COMMITTER_DATE="
+                                    {contribution.commit.date}" git commit --allow-empty -m "
+                                    {contribution.commit.message}"
+                                  </div>
+                                </div>
+                              )
+                            })}
+
+                            {contributionCount === 0 && (
+                              <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                                No contributions added yet. Use spacebar to toggle contributions on the graph.
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        <DrawerFooter>
+                          <DrawerClose asChild>
+                            <Button variant="outline" className="rounded-none">
+                              Close
+                            </Button>
+                          </DrawerClose>
+                        </DrawerFooter>
+                      </div>
+                    </DrawerContent>
+                  </Drawer>
+                </div>
               </div>
             </div>
           </div>
@@ -882,9 +906,8 @@ export default function GraphPage() {
                 <div>
                   <h3 className="font-medium mb-1">Touch Controls</h3>
                   <ul className="text-sm space-y-1 text-gray-700 dark:text-gray-300">
-                    <li>• Tap: Select a day</li>
+                    <li>• Tap: Toggle contribution</li>
                     <li>• Double tap: Edit commit message</li>
-                    <li>• Long press: Toggle contribution</li>
                   </ul>
                 </div>
 
