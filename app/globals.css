@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 220 14% 50%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 220 14% 50%;
+    --radius: 0rem;
+  }
+
+  .dark {
+    --background: 0 0% 10%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 60%;
+    --primary-foreground: 0 0% 10%;
+    --secondary: 0 0% 17.5%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 17.5%;
+    --muted-foreground: 0 0% 65.1%;
+    --accent: 0 0% 17.5%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 17.5%;
+    --input: 0 0% 17.5%;
+    --ring: 0 0% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Override border radius for all components */
+  button,
+  input,
+  textarea,
+  select,
+  .rounded,
+  .rounded-md,
+  .rounded-lg,
+  .rounded-full,
+  .card,
+  .dialog-content,
+  .drawer-content {
+    border-radius: 0 !important;
+  }
+}
+
+/* Custom styles for perspective */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+/* Fix for dark mode text in buttons */
+.dark .btn,
+.dark button {
+  color: var(--foreground);
+}
+
+/* Add these touch-related styles to the end of the file */
+
+/* Improve touch target sizes */
+@media (pointer: coarse) {
+  .touch-action-manipulation {
+    touch-action: manipulation;
+  }
+
+  /* Increase touch target size on mobile */
+  #grid-container .w-6.h-6 {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  /* Adjust day of week labels for larger grid */
+  #grid-container .grid-rows-7 .h-6.w-8 {
+    height: 2rem;
+    width: 2.5rem;
+  }
+}
+
+/* Add active state styles for touch feedback */
+.active\:opacity-70:active {
+  opacity: 0.7;
+}
+
+/* Disable text selection during touch interactions */
+.touch-none {
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
