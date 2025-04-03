@@ -442,8 +442,8 @@ export default function GraphPage() {
                       hover:opacity-80
                     `}
                     onClick={() => {
-                      setCurrentDay(dayNumber);
-                      toggleContribution(dayNumber);
+                      setCurrentDay(dayNumber)
+                      toggleContribution(dayNumber)
                     }}
                     onDoubleClick={() => {
                       if (hasContribution) {
@@ -601,7 +601,9 @@ export default function GraphPage() {
   return (
     <>
       <VoidGridBackground />
-      <style jsx global>{`
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
@@ -634,7 +636,9 @@ export default function GraphPage() {
     -webkit-overflow-scrolling: touch;
     overflow-x: scroll;
   }
-`}</style>
+`,
+        }}
+      />
 
       <main className="relative z-10 min-h-screen flex flex-col">
         {/* Top navigation bar with logo and controls */}
@@ -704,7 +708,8 @@ export default function GraphPage() {
                 <TooltipContent>
                   <p>Help &amp; Instructions</p>
                 </TooltipContent>
-              </TooltipProvider>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </div>
 
