@@ -2,8 +2,6 @@
 
 ![TimeWrap Logo](./public/logo.jpg)
 
-CHECKOUT TEST RESULT AT: [OmPreetham 2016 Contribution Graph](https://github.com/OmPreetham?tab=overview&from=2016-12-01&to=2016-12-31)
-
 ## Commit Anywhere in Time
 
 TimeWrap is a web application that allows you to create and customize your GitHub contribution graph. Design your own contribution pattern and export it as Git commands to recreate the pattern on your actual GitHub profile.

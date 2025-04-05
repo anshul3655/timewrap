@@ -2,20 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef, type ChangeEvent } from "react"
 import { useParams, useRouter } from "next/navigation"
-import {
-  Download,
-  Save,
-  Copy,
-  MessageSquare,
-  Check,
-  Info,
-  Calendar,
-  Edit,
-  X,
-  FileUp,
-  Database,
-  Eye,
-} from "lucide-react"
+import { Download, Save, Copy, MessageSquare, Check, Info, Calendar, Edit, FileUp, Database } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
@@ -71,7 +58,6 @@ export default function GraphPage() {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [inputYear, setInputYear] = useState<string>(year.toString())
   const [showTouchInstructions, setShowTouchInstructions] = useState<boolean>(true)
-  const [showControls, setShowControls] = useState<boolean>(true)
 
   // Check if it's a leap year
   useEffect(() => {
@@ -584,11 +570,6 @@ export default function GraphPage() {
     }
   }, [showTouchInstructions])
 
-  // Toggle controls visibility on mobile
-  const toggleControls = () => {
-    setShowControls(!showControls)
-  }
-
   // Format current date
   const formatCurrentDate = () => {
     if (currentDay >= 0 && currentDay < totalDays) {
@@ -718,7 +699,12 @@ export default function GraphPage() {
           <div
             ref={graphRef}
             className="overflow-x-auto p-4 md:p-6 rounded-none scrollbar-hide focus:outline-none"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+            style={{
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+              WebkitOverflowScrolling: "touch", // Add this for better iOS scrolling
+              touchAction: "pan-x", // Allow horizontal panning
+            }}
             tabIndex={0}
           >
             <div className="min-w-max">{renderGrid()}</div>
@@ -728,9 +714,9 @@ export default function GraphPage() {
         {/* Selected day info panel */}
         {currentDay >= 0 && currentDay < totalDays && (
           <div className="fixed top-24 left-1/2 transform -translate-x-1/2 z-20 glass-panel px-4 py-2 text-center">
-            <div className="text-sm font-medium">
-              {formatCurrentDate()}
-              <span className="text-xs ml-2 text-gray-500 dark:text-gray-400">
+            <div className="flex flex-col sm:flex-row sm:items-center">
+              <div className="text-sm font-medium">{formatCurrentDate()}</div>
+              <span className="text-xs sm:ml-2 text-gray-500 dark:text-gray-400">
                 (Day {currentDay + 1} of {totalDays})
               </span>
             </div>
@@ -752,21 +738,8 @@ export default function GraphPage() {
         <div className="fixed bottom-0 left-0 right-0 z-20 glass-panel">
           <div className="container mx-auto px-4 py-3">
             <div className="flex flex-col sm:flex-row sm:flex-wrap sm:justify-center gap-2 sm:gap-4">
-              {isMobile && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={toggleControls}
-                  className="h-10 w-10 p-0 flex-shrink-0 absolute left-4 bottom-3"
-                >
-                  {showControls ? <X className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                </Button>
-              )}
-
-              {/* Controls that can be hidden */}
-              <div
-                className={`flex flex-col sm:flex-row w-full gap-2 transition-opacity duration-300 ${isMobile && !showControls ? "opacity-0 pointer-events-none" : "opacity-100"}`}
-              >
+              {/* Controls */}
+              <div className="flex flex-col sm:flex-row w-full gap-2">
                 {/* First row on mobile - Save and Import */}
                 <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-row">
                   <Button variant="outline" size="sm" onClick={saveContributions} className="w-full sm:min-w-[80px]">
@@ -795,11 +768,15 @@ export default function GraphPage() {
                   </Button>
                 </div>
 
-                {/* Commits button */}
-                <div className="w-full sm:w-auto">
+                {/* Commits button - more prominent */}
+                <div className="w-full sm:w-auto mt-2 sm:mt-0">
                   <Drawer>
                     <DrawerTrigger asChild>
-                      <Button variant="outline" className="w-full sm:min-w-[80px]">
+                      <Button
+                        variant="default"
+                        size="default"
+                        className="w-full sm:min-w-[100px] bg-white text-gray-800 dark:bg-gray-100 dark:text-gray-900 hover:bg-gray-200 dark:hover:bg-gray-200 border-2 border-gray-400 font-medium"
+                      >
                         <MessageSquare className="h-4 w-4 mr-2" />
                         <span>Commits ({contributionCount})</span>
                       </Button>
